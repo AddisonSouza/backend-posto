@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: addiz
+      POSTGRES_PASSWORD: senha
+      POSTGRES_DB: gasosa
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend_net
+
+  tomcat:
+    build: .
+    container_name: tomcat_app
+    ports:
+      - "8288:8288"
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: gasosa
+      DB_USER: addiz
+      DB_PASS: senha
+    networks:
+      - backend_net
+
+volumes:
+  pgdata:
+
+networks:
+  backend_net:
