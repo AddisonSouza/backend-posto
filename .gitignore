@@ -5,10 +5,16 @@ target/
 .kotlin
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+.idea/
+*.log
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+*.ipr
+out/
+build/
 *.iws
 *.iml
 *.ipr
@@ -40,3 +46,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# Docker - dados e volumes locais
+docker-compose.override.yml
+.docker/
