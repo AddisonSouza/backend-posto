@@ -14,7 +14,7 @@ public abstract class GenericService<T, D> {
 
             String daoName = serviceName.replace("Service", "Dao");
 
-            String daoClassName = "br.com.jaas.backendposto.dao." + daoName;
+            String daoClassName = "br.com.jaas.backendposto.repository." + daoName;
 
             Class<?> daoClass = Class.forName(daoClassName);
             this.dao = (D) daoClass.getDeclaredConstructor().newInstance();
@@ -26,7 +26,7 @@ public abstract class GenericService<T, D> {
 
     public T save(T entity) {
         try {
-            return (T) dao.getClass().getMethod("save", Object.class).invoke(dao, entity);
+            return (T) dao.getClass().getMethod("save", entity.getClass()).invoke(dao, entity);
         } catch (Exception e) {
             throw new RuntimeException("Erro ao salvar", e);
         }
@@ -50,7 +50,7 @@ public abstract class GenericService<T, D> {
 
     public void update(T entity) {
         try {
-            dao.getClass().getMethod("update", Object.class).invoke(dao, entity);
+            dao.getClass().getMethod("update", entity.getClass()).invoke(dao, entity);
         } catch (Exception e) {
             throw new RuntimeException("Erro ao atualizar", e);
         }
