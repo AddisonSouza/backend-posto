@@ -1,4 +1,6 @@
 package br.com.jaas.backendposto.service;
 
-public class VendaService {
+import br.com.jaas.backendposto.repository.VendaDao;
+
+public class VendaService extends GenericService<VendaService, VendaDao>{
 }

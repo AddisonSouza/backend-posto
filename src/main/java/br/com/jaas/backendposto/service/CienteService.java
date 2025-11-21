@@ -1,4 +1,6 @@
 package br.com.jaas.backendposto.service;
 
-public class CienteService {
+import br.com.jaas.backendposto.repository.ClienteDao;
+
+public class CienteService extends GenericService<CienteService, ClienteDao>{
 }
