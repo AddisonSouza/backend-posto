@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class DBConnection {
 
-    private static final String URL = "jdbc:postgresql://" +
+    private static final String URL = "jdbc:mysql://" +
             System.getenv("DB_HOST") + ":" +
             System.getenv("DB_PORT") + "/" +
             System.getenv("DB_NAME");
@@ -13,7 +13,7 @@ public class DBConnection {
     private static final String PASS = System.getenv("DB_PASS");
 
     public static Connection getConnection() throws Exception {
-        Class.forName("org.postgresql.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(URL, USER, PASS);
     }
 }

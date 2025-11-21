@@ -1,17 +1,16 @@
-version: '3.9'
-
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres_db
+  mysql:
+    image: mysql:8.3.0
+    container_name: mysql_db
     environment:
-      POSTGRES_USER: addiz
-      POSTGRES_PASSWORD: senha
-      POSTGRES_DB: gasosa
+      MYSQL_ROOT_PASSWORD: senha
+      MYSQL_DATABASE: gasosa
+      MYSQL_USER: addiz
+      MYSQL_PASSWORD: senha
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - mysqldata:/var/lib/mysql
     networks:
       - backend_net
 
@@ -21,10 +20,10 @@ services:
     ports:
       - "8288:8288"
     depends_on:
-      - postgres
+      - mysql
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: mysql
+      DB_PORT: 3306
       DB_NAME: gasosa
       DB_USER: addiz
       DB_PASS: senha
@@ -32,7 +31,7 @@ services:
       - backend_net
 
 volumes:
-  pgdata:
+  mysqldata:
 
 networks:
   backend_net:

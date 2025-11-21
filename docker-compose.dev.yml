@@ -1,16 +1,17 @@
 # docker-compose.dev.yml
-version: '3.9'
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres_dev
+  mysql:
+    image: mysql:8.3.0
+    container_name: mysql_dev
     environment:
-      POSTGRES_USER: addiz
-      POSTGRES_PASSWORD: senha
-      POSTGRES_DB: gasosa
+      MYSQL_ROOT_PASSWORD: senha
+      MYSQL_DATABASE: gasosa
+      MYSQL_USER: addiz
+      MYSQL_PASSWORD: senha
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - mysqldata:/var/lib/mysql
 volumes:
-  pgdata:
+  mysqldata:
+
