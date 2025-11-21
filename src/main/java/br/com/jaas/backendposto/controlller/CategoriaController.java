@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/api/categoria/")
+@WebServlet("/api/categoria/*")
 public class CategoriaController extends HttpServlet {
 
     private final CategoriaService categoriaService = new CategoriaService();

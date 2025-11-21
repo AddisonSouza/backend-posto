@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/api/produto/")
+@WebServlet("/api/produto/*")
 public class ProdutoController extends HttpServlet {
 
     private final ProdutoService produtoService = new ProdutoService();

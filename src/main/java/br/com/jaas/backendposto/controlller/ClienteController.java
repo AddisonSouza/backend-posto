@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/api/cliente/")
+@WebServlet("/api/cliente/*")
 public class ClienteController extends HttpServlet {
 
     private final ClienteService clienteService = new ClienteService();
