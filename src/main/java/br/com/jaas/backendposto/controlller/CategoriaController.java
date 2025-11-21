@@ -13,10 +13,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/api/categorias/*")
+@WebServlet("/api/categoria/")
 public class CategoriaController extends HttpServlet {
 
-    private final CategoriaService service = new CategoriaService();
+    private final CategoriaService categoriaService = new CategoriaService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -24,11 +24,11 @@ public class CategoriaController extends HttpServlet {
         Long id = ServletHelper.getIdFromPath(request);
 
         if (id == null) {
-            List<Categoria> categorias = service.findAll();
+            List<Categoria> categorias = categoriaService.findAll();
             ApiResponse<List<Categoria>> apiResponse = ApiResponseFactory.success(categorias);
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_OK, apiResponse);
         } else {
-            Categoria categoria = service.findById(id);
+            Categoria categoria = categoriaService.findById(id);
             if (categoria == null) {
                 ApiResponse<Categoria> apiResponse = ApiResponseFactory.notFound("Categoria");
                 ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_NOT_FOUND, apiResponse);
@@ -51,7 +51,7 @@ public class CategoriaController extends HttpServlet {
                 return;
             }
 
-            Categoria saved = service.save(categoria);
+            Categoria saved = categoriaService.save(categoria);
             ApiResponse<Categoria> apiResponse = ApiResponseFactory.created(saved);
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_CREATED, apiResponse);
         } catch (Exception e) {
@@ -75,15 +75,15 @@ public class CategoriaController extends HttpServlet {
             Categoria categoria = ServletHelper.parseRequestBody(request, Categoria.class);
             categoria.setIdCategoria(id);
 
-            Categoria existing = service.findById(id);
+            Categoria existing = categoriaService.findById(id);
             if (existing == null) {
                 ApiResponse<Categoria> apiResponse = ApiResponseFactory.notFound("Categoria");
                 ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_NOT_FOUND, apiResponse);
                 return;
             }
 
-            service.update(categoria);
-            Categoria updated = service.findById(id);
+            categoriaService.update(categoria);
+            Categoria updated = categoriaService.findById(id);
             ApiResponse<Categoria> apiResponse = ApiResponseFactory.updated(updated);
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_OK, apiResponse);
         } catch (Exception e) {
@@ -104,14 +104,14 @@ public class CategoriaController extends HttpServlet {
         }
 
         try {
-            Categoria existing = service.findById(id);
+            Categoria existing = categoriaService.findById(id);
             if (existing == null) {
                 ApiResponse<Void> apiResponse = ApiResponseFactory.notFound("Categoria");
                 ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_NOT_FOUND, apiResponse);
                 return;
             }
 
-            service.deleteById(id);
+            categoriaService.deleteById(id);
             ApiResponse<Void> apiResponse = ApiResponseFactory.deleted();
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_OK, apiResponse);
         } catch (Exception e) {

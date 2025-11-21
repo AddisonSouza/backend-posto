@@ -13,10 +13,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/api/vendas/*")
+@WebServlet("/api/venda/")
 public class VendaController extends HttpServlet {
 
-    private final VendaService service = new VendaService();
+    private final VendaService vendaService = new VendaService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -24,11 +24,11 @@ public class VendaController extends HttpServlet {
         Long id = ServletHelper.getIdFromPath(request);
 
         if (id == null) {
-            List<Venda> vendas = service.findAll();
+            List<Venda> vendas = vendaService.findAll();
             ApiResponse<List<Venda>> apiResponse = ApiResponseFactory.success(vendas);
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_OK, apiResponse);
         } else {
-            Venda venda = service.findById(id);
+            Venda venda = vendaService.findById(id);
             if (venda == null) {
                 ApiResponse<Venda> apiResponse = ApiResponseFactory.notFound("Venda");
                 ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_NOT_FOUND, apiResponse);
@@ -63,7 +63,7 @@ public class VendaController extends HttpServlet {
                 return;
             }
 
-            Venda saved = service.save(venda);
+            Venda saved = vendaService.save(venda);
             ApiResponse<Venda> apiResponse = ApiResponseFactory.created(saved);
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_CREATED, apiResponse);
         } catch (Exception e) {
@@ -87,15 +87,15 @@ public class VendaController extends HttpServlet {
             Venda venda = ServletHelper.parseRequestBody(request, Venda.class);
             venda.setIdVenda(id);
 
-            Venda existing = service.findById(id);
+            Venda existing = vendaService.findById(id);
             if (existing == null) {
                 ApiResponse<Venda> apiResponse = ApiResponseFactory.notFound("Venda");
                 ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_NOT_FOUND, apiResponse);
                 return;
             }
 
-            service.update(venda);
-            Venda updated = service.findById(id);
+            vendaService.update(venda);
+            Venda updated = vendaService.findById(id);
             ApiResponse<Venda> apiResponse = ApiResponseFactory.updated(updated);
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_OK, apiResponse);
         } catch (Exception e) {
@@ -116,14 +116,14 @@ public class VendaController extends HttpServlet {
         }
 
         try {
-            Venda existing = service.findById(id);
+            Venda existing = vendaService.findById(id);
             if (existing == null) {
                 ApiResponse<Void> apiResponse = ApiResponseFactory.notFound("Venda");
                 ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_NOT_FOUND, apiResponse);
                 return;
             }
 
-            service.deleteById(id);
+            vendaService.deleteById(id);
             ApiResponse<Void> apiResponse = ApiResponseFactory.deleted();
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_OK, apiResponse);
         } catch (Exception e) {

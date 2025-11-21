@@ -13,10 +13,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/api/produtos/*")
+@WebServlet("/api/produto/")
 public class ProdutoController extends HttpServlet {
 
-    private final ProdutoService service = new ProdutoService();
+    private final ProdutoService produtoService = new ProdutoService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -24,11 +24,11 @@ public class ProdutoController extends HttpServlet {
         Long id = ServletHelper.getIdFromPath(request);
 
         if (id == null) {
-            List<Produto> produtos = service.findAll();
+            List<Produto> produtos = produtoService.findAll();
             ApiResponse<List<Produto>> apiResponse = ApiResponseFactory.success(produtos);
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_OK, apiResponse);
         } else {
-            Produto produto = service.findById(id);
+            Produto produto = produtoService.findById(id);
             if (produto == null) {
                 ApiResponse<Produto> apiResponse = ApiResponseFactory.notFound("Produto");
                 ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_NOT_FOUND, apiResponse);
@@ -63,7 +63,7 @@ public class ProdutoController extends HttpServlet {
                 return;
             }
 
-            Produto saved = service.save(produto);
+            Produto saved = produtoService.save(produto);
             ApiResponse<Produto> apiResponse = ApiResponseFactory.created(saved);
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_CREATED, apiResponse);
         } catch (Exception e) {
@@ -87,15 +87,15 @@ public class ProdutoController extends HttpServlet {
             Produto produto = ServletHelper.parseRequestBody(request, Produto.class);
             produto.setIdProduto(id);
 
-            Produto existing = service.findById(id);
+            Produto existing = produtoService.findById(id);
             if (existing == null) {
                 ApiResponse<Produto> apiResponse = ApiResponseFactory.notFound("Produto");
                 ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_NOT_FOUND, apiResponse);
                 return;
             }
 
-            service.update(produto);
-            Produto updated = service.findById(id);
+            produtoService.update(produto);
+            Produto updated = produtoService.findById(id);
             ApiResponse<Produto> apiResponse = ApiResponseFactory.updated(updated);
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_OK, apiResponse);
         } catch (Exception e) {
@@ -116,14 +116,14 @@ public class ProdutoController extends HttpServlet {
         }
 
         try {
-            Produto existing = service.findById(id);
+            Produto existing = produtoService.findById(id);
             if (existing == null) {
                 ApiResponse<Void> apiResponse = ApiResponseFactory.notFound("Produto");
                 ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_NOT_FOUND, apiResponse);
                 return;
             }
 
-            service.deleteById(id);
+            produtoService.deleteById(id);
             ApiResponse<Void> apiResponse = ApiResponseFactory.deleted();
             ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_OK, apiResponse);
         } catch (Exception e) {
