@@ -1,10 +1,10 @@
 package br.com.jaas.backendposto.service;
 
+import br.com.jaas.backendposto.repository.GenericDao;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
-
-public abstract class GenericService<T, D> {
+public abstract class GenericService<T, D extends GenericDao<T>> {
 
     protected D dao;
 
@@ -25,43 +25,23 @@ public abstract class GenericService<T, D> {
     }
 
     public T save(T entity) {
-        try {
-            return (T) dao.getClass().getMethod("save", entity.getClass()).invoke(dao, entity);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao salvar", e);
-        }
+        return dao.save(entity);
     }
 
     public T findById(Long id) {
-        try {
-            return (T) dao.getClass().getMethod("findById", Long.class).invoke(dao, id);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao buscar por ID", e);
-        }
+        return dao.findById(id);
     }
 
     public List<T> findAll() {
-        try {
-            return (List<T>) dao.getClass().getMethod("findAll").invoke(dao);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao buscar todos", e);
-        }
+        return dao.findAll();
     }
 
     public void update(T entity) {
-        try {
-            dao.getClass().getMethod("update", entity.getClass()).invoke(dao, entity);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao atualizar", e);
-        }
+        dao.update(entity);
     }
 
     public void deleteById(Long id) {
-        try {
-            dao.getClass().getMethod("deleteById", Long.class).invoke(dao, id);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao deletar", e);
-        }
+        dao.deleteById(id);
     }
 }
 
