@@ -1,7 +1,9 @@
-package br.com.jaas.backendposto.repository;
+package br.com.jaas.backendposto.dao;
 
 import br.com.jaas.backendposto.config.DBConnection;
+import br.com.jaas.backendposto.model.Categoria;
 import br.com.jaas.backendposto.model.Cliente;
+import br.com.jaas.backendposto.model.Produto;
 import br.com.jaas.backendposto.model.Venda;
 
 import java.sql.Connection;
@@ -36,14 +38,14 @@ public class VendaDao extends GenericDao<Venda> {
     @Override
     protected void setInsertParameters(PreparedStatement stmt, Venda venda) throws Exception {
         stmt.setLong(1, venda.getCliente().getIdCliente());
-        stmt.setDouble(2, venda.getValorTotal());
+        stmt.setDouble(2, venda.getPrecoUnitario());
         stmt.setTimestamp(3, Timestamp.valueOf(venda.getDataVenda()));
     }
 
     @Override
     protected void setUpdateParameters(PreparedStatement stmt, Venda venda) throws Exception {
         stmt.setLong(1, venda.getCliente().getIdCliente());
-        stmt.setDouble(2, venda.getValorTotal());
+        stmt.setDouble(2, venda.getPrecoUnitario());
         stmt.setTimestamp(3, Timestamp.valueOf(venda.getDataVenda()));
         stmt.setLong(4, venda.getIdVenda());
     }
@@ -58,12 +60,26 @@ public class VendaDao extends GenericDao<Venda> {
             rs.getString("email"),
             rs.getString("endereco")
         );
+
+        Categoria categoria = new Categoria(
+            rs.getLong("idCategoria"),
+            rs.getString("descricao")
+        );
+
+        Produto produto = new Produto(
+            rs.getLong("idProduto"),
+            rs.getString("descricao"),
+            rs.getInt("qauntidade"),
+            rs.getDouble("preco"),
+            categoria
+        );
         return new Venda(
             rs.getLong("idVenda"),
             cliente,
-            rs.getDouble("valorTotal"),
-            rs.getTimestamp("dataVenda").toLocalDateTime(),
-            null
+            produto,
+            rs.getDouble("precoUnitario"),
+            rs.getInt("quantidade"),
+            rs.getTimestamp("dataVenda").toLocalDateTime()
         );
     }
 

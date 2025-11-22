@@ -1,6 +1,6 @@
 package br.com.jaas.backendposto.service;
 
-import br.com.jaas.backendposto.repository.GenericDao;
+import br.com.jaas.backendposto.dao.GenericDao;
 import java.util.List;
 
 @SuppressWarnings("unchecked")

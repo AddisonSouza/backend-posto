@@ -51,7 +51,7 @@ public class VendaController extends HttpServlet {
                 return;
             }
 
-            if (venda.getValorTotal() <= 0) {
+            if (venda.getPrecoUnitario() <= 0) {
                 ApiResponse<Venda> apiResponse = ApiResponseFactory.badRequest("Valor total deve ser maior que zero");
                 ServletHelper.writeJsonResponse(response, HttpServletResponse.SC_BAD_REQUEST, apiResponse);
                 return;

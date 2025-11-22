@@ -1,25 +1,26 @@
 package br.com.jaas.backendposto.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Venda {
     private Long idVenda;
     private Cliente cliente;
-    private double valorTotal;
+    private Produto produto;
+    private double precoUnitario;
+    private int quantidade;
     private LocalDateTime dataVenda;
-    private List<VendaProduto> produtos;
 
 
     public Venda() {
     }
 
-    public Venda(Long idVenda, Cliente cliente, double valorTotal, LocalDateTime dataVenda, List<VendaProduto> produtos) {
+    public Venda(Long idVenda, Cliente cliente, Produto produto, double precoUnitario, int quantidade, LocalDateTime dataVenda) {
         this.idVenda = idVenda;
         this.cliente = cliente;
-        this.valorTotal = valorTotal;
+        this.produto = produto;
+        this.precoUnitario = precoUnitario;
+        this.quantidade = quantidade;
         this.dataVenda = dataVenda;
-        this.produtos = produtos;
     }
 
     public Long getIdVenda() {
@@ -38,12 +39,28 @@ public class Venda {
         this.cliente = cliente;
     }
 
-    public double getValorTotal() {
-        return valorTotal;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public double getPrecoUnitario() {
+        return precoUnitario;
+    }
+
+    public void setPrecoUnitario(double precoUnitario) {
+        this.precoUnitario = precoUnitario;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
     public LocalDateTime getDataVenda() {
@@ -52,12 +69,5 @@ public class Venda {
 
     public void setDataVenda(LocalDateTime dataVenda) {
         this.dataVenda = dataVenda;
-    }
-
-    public List<VendaProduto> getProdutos() {
-        return produtos;
-    }
-    public void setProdutos(List<VendaProduto> produtos) {
-        this.produtos = produtos;
     }
 }

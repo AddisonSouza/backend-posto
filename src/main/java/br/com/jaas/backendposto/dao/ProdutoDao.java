@@ -1,4 +1,4 @@
-package br.com.jaas.backendposto.repository;
+package br.com.jaas.backendposto.dao;
 
 import br.com.jaas.backendposto.config.DBConnection;
 import br.com.jaas.backendposto.model.Categoria;
