@@ -12,6 +12,10 @@ public class Categoria {
         this.nomeCategoria = nomeCategoria;
     }
 
+    public Categoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
     public Long getIdCategoria() {
         return idCategoria;
     }

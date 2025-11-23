@@ -14,7 +14,7 @@ public abstract class GenericService<T, D extends GenericDao<T>> {
 
             String daoName = serviceName.replace("Service", "Dao");
 
-            String daoClassName = "br.com.jaas.backendposto.repository." + daoName;
+            String daoClassName = "br.com.jaas.backendposto.dao." + daoName;
 
             Class<?> daoClass = Class.forName(daoClassName);
             this.dao = (D) daoClass.getDeclaredConstructor().newInstance();

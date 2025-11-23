@@ -17,6 +17,10 @@ public class Produto {
         this.categoria = categoria;
     }
 
+    public Produto(Long idProduto) {
+        this.idProduto = idProduto;
+    }
+
     public Long getIdProduto() {
         return idProduto;
     }

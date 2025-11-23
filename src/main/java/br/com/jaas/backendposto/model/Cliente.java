@@ -20,6 +20,10 @@ public class Cliente {
         this.endereco = endereco;
     }
 
+    public Cliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
     public Long getIdCliente() {
         return idCliente;
     }
