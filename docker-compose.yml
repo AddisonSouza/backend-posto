@@ -11,16 +11,26 @@ services:
       - "3306:3306"
     volumes:
       - mysqldata:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - backend_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-psenha"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   tomcat:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: tomcat_app
     ports:
-      - "8288:8288"
+      - "8090:8080"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     environment:
       DB_HOST: mysql
       DB_PORT: 3306
@@ -29,9 +39,11 @@ services:
       DB_PASS: senha
     networks:
       - backend_net
+    restart: unless-stopped
 
 volumes:
   mysqldata:
 
 networks:
   backend_net:
+    driver: bridge
