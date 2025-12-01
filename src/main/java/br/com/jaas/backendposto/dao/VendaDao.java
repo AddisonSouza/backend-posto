@@ -22,17 +22,17 @@ public class VendaDao extends GenericDao<Venda> {
 
     @Override
     protected String getIdColumnName() {
-        return "idVenda";
+        return "id_venda";
     }
 
     @Override
     protected String getInsertQuery() {
-        return "INSERT INTO venda (idCliente, idProduto, precoUnitario, quantidade, dataVenda) VALUES (?, ?, ?, ?, ?)";
+        return "INSERT INTO venda (id_cliente, id_produto, preco, quantidade, data_venda) VALUES (?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE venda SET idCliente = ?, idProduto = ?, precoUnitario = ?, quantidade = ?, dataVenda = ? WHERE idVenda = ?";
+        return "UPDATE venda SET id_cliente = ?, id_produto = ?, preco = ?, quantidade = ?, data_venda = ? WHERE id_venda = ?";
     }
 
     @Override
@@ -57,7 +57,7 @@ public class VendaDao extends GenericDao<Venda> {
     @Override
     protected Venda mapResultSetToEntity(ResultSet rs) throws Exception {
         Cliente cliente = new Cliente(
-                rs.getLong("idCliente"),
+                rs.getLong("id_cliente"),
                 rs.getString("nome"),
                 rs.getString("cpf"),
                 rs.getString("telefone"),
@@ -72,33 +72,33 @@ public class VendaDao extends GenericDao<Venda> {
 
         Produto produto = new Produto(
                 rs.getLong("id_produto"),
-                rs.getString("descricao"),
+                rs.getString("nome"),
                 rs.getInt("quantidade"),
                 rs.getDouble("preco"),
                 categoria
         );
 
         return new Venda(
-                rs.getLong("idVenda"),
+                rs.getLong("id_venda"),
                 cliente,
                 produto,
-                rs.getDouble("precoUnitario"),
+                rs.getDouble("preco"),
                 rs.getInt("quantidade"),
-                rs.getTimestamp("dataVenda").toLocalDateTime()
+                rs.getTimestamp("data_venda").toLocalDateTime()
         );
     }
 
     @Override
     public Venda findById(Long id) {
         String sql = "SELECT v.*, " +
-                "c.idCliente, c.nome, c.cpf, c.telefone, c.email, c.endereco, " +
-                "p.idProduto, p.descricao AS produtoDescricao, p.quantidade, p.preco, " +
-                "cat.idCategoria, cat.nomeCategoria AS categoriaDescricao " +
+                "c.id_cliente, c.nome, c.cpf, c.telefone, c.email, c.endereco, " +
+                "p.id_produto, p.nome AS produtoDescricao, p.quantidade, p.preco, " +
+                "cat.id_categoria, cat.nome AS categoriaDescricao " +
                 "FROM venda v " +
-                "INNER JOIN cliente c ON v.idCliente = c.idCliente " +
-                "INNER JOIN produto p ON v.idProduto = p.idProduto " +
-                "INNER JOIN categoria cat ON p.idCategoria = cat.idCategoria " +
-                "WHERE v.idVenda = ?";
+                "INNER JOIN cliente c ON v.id_cliente = c.id_cliente " +
+                "INNER JOIN produto p ON v.id_produto = p.id_produto " +
+                "INNER JOIN categoria cat ON p.id_categoria = cat.id_categoria " +
+                "WHERE v.id_venda = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, id);
@@ -116,13 +116,13 @@ public class VendaDao extends GenericDao<Venda> {
     @Override
     public List<Venda> findAll() {
         String sql = "SELECT v.*, " +
-                "c.idCliente, c.nome, c.cpf, c.telefone, c.email, c.endereco, " +
-                "p.idProduto, p.descricao AS produtoDescricao, p.quantidade, p.preco, " +
-                "cat.idCategoria, cat.nomeCategoria AS categoriaDescricao " +
+                "c.id_cliente, c.nome, c.cpf, c.telefone, c.email, c.endereco, " +
+                "p.id_produto, p.nome AS produtoDescricao, p.quantidade, p.preco, " +
+                "cat.id_categoria, cat.nome AS categoriaDescricao " +
                 "FROM venda v " +
-                "INNER JOIN cliente c ON v.idCliente = c.idCliente " +
-                "INNER JOIN produto p ON v.idProduto = p.idProduto " +
-                "INNER JOIN categoria cat ON p.idCategoria = cat.idCategoria";
+                "INNER JOIN cliente c ON v.id_cliente = c.id_cliente " +
+                "INNER JOIN produto p ON v.id_produto = p.id_produto " +
+                "INNER JOIN categoria cat ON p.id_categoria = cat.id_categoria";
         List<Venda> vendas = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);

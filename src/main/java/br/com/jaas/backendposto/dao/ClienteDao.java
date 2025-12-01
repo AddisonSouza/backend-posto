@@ -14,7 +14,7 @@ public class ClienteDao extends GenericDao<Cliente> {
 
     @Override
     protected String getIdColumnName() {
-        return "idCliente";
+        return "id_cliente";
     }
 
     @Override
@@ -24,7 +24,7 @@ public class ClienteDao extends GenericDao<Cliente> {
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE cliente SET nome = ?, cpf = ?, telefone = ?, email = ?, endereco = ? WHERE idCliente = ?";
+        return "UPDATE cliente SET nome = ?, cpf = ?, telefone = ?, email = ?, endereco = ? WHERE id_cliente = ?";
     }
 
     @Override

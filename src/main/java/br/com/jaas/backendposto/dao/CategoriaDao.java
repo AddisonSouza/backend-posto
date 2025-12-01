@@ -14,17 +14,17 @@ public class CategoriaDao extends GenericDao<Categoria> {
 
     @Override
     protected String getIdColumnName() {
-        return "idCategoria";
+        return "id_categoria";
     }
 
     @Override
     protected String getInsertQuery() {
-        return "INSERT INTO categoria (nomeCategoria) VALUES (?)";
+        return "INSERT INTO categoria (nome) VALUES (?)";
     }
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE categoria SET nomeCategoria = ? WHERE idCategoria = ?";
+        return "UPDATE categoria SET nome = ? WHERE id_categoria = ?";
     }
 
     @Override

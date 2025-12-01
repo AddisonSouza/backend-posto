@@ -19,17 +19,17 @@ public class ProdutoDao extends GenericDao<Produto> {
 
     @Override
     protected String getIdColumnName() {
-        return "idProduto";
+        return "id_produto";
     }
 
     @Override
     protected String getInsertQuery() {
-        return "INSERT INTO produto (descricao, quantidade, preco, idCategoria) VALUES (?, ?, ?, ?)";
+        return "INSERT INTO produto (nome, quantidade, preco, id_categoria) VALUES (?, ?, ?, ?)";
     }
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE produto SET descricao = ?, quantidade = ?, preco = ?, idCategoria = ? WHERE idProduto = ?";
+        return "UPDATE produto SET nome = ?, quantidade = ?, preco = ?, id_categoria = ? WHERE id_produto = ?";
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ProdutoDao extends GenericDao<Produto> {
         );
         return new Produto(
             rs.getLong("id_produto"),
-            rs.getString("descricao"),
+            rs.getString("nome"),
             rs.getInt("quantidade"),
             rs.getDouble("preco"),
             categoria
@@ -66,9 +66,9 @@ public class ProdutoDao extends GenericDao<Produto> {
 
     @Override
     public Produto findById(Long id) {
-        String sql = "SELECT p.*, c.idCategoria, c.nomeCategoria FROM produto p " +
-                     "INNER JOIN categoria c ON p.idCategoria = c.idCategoria " +
-                     "WHERE p.idProduto = ?";
+        String sql = "SELECT p.*, c.id_categoria, c.nome FROM produto p " +
+                     "INNER JOIN categoria c ON p.id_categoria = c.id_categoria " +
+                     "WHERE p.id_produto = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, id);
@@ -84,8 +84,8 @@ public class ProdutoDao extends GenericDao<Produto> {
 
     @Override
     public List<Produto> findAll() {
-        String sql = "SELECT p.*, c.idCategoria, c.nomeCategoria FROM produto p " +
-                     "INNER JOIN categoria c ON p.idCategoria = c.idCategoria";
+        String sql = "SELECT p.*, c.id_categoria, c.nome FROM produto p " +
+                     "INNER JOIN categoria c ON p.id_categoria = c.id_categoria";
         List<Produto> produtos = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
