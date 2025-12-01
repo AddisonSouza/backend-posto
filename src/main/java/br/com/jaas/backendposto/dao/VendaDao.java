@@ -66,13 +66,13 @@ public class VendaDao extends GenericDao<Venda> {
         );
 
         Categoria categoria = new Categoria(
-                rs.getLong("idCategoria"),
-                rs.getString("categoriaDescricao")
+                rs.getLong("id_categoria"),
+                rs.getString("nome")
         );
 
         Produto produto = new Produto(
-                rs.getLong("idProduto"),
-                rs.getString("produtoDescricao"),
+                rs.getLong("id_produto"),
+                rs.getString("descricao"),
                 rs.getInt("quantidade"),
                 rs.getDouble("preco"),
                 categoria

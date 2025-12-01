@@ -49,7 +49,7 @@ public class ClienteDao extends GenericDao<Cliente> {
     @Override
     protected Cliente mapResultSetToEntity(ResultSet rs) throws Exception {
         return new Cliente(
-            rs.getLong("idCliente"),
+            rs.getLong("id_cliente"),
             rs.getString("nome"),
             rs.getString("cpf"),
             rs.getString("telefone"),

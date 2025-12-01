@@ -52,11 +52,11 @@ public class ProdutoDao extends GenericDao<Produto> {
     @Override
     protected Produto mapResultSetToEntity(ResultSet rs) throws Exception {
         Categoria categoria = new Categoria(
-            rs.getLong("idCategoria"),
-            rs.getString("nomeCategoria")
+            rs.getLong("id_categoria"),
+            rs.getString("nome")
         );
         return new Produto(
-            rs.getLong("idProduto"),
+            rs.getLong("id_produto"),
             rs.getString("descricao"),
             rs.getInt("quantidade"),
             rs.getDouble("preco"),

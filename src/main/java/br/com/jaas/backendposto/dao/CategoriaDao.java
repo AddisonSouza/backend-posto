@@ -41,8 +41,8 @@ public class CategoriaDao extends GenericDao<Categoria> {
     @Override
     protected Categoria mapResultSetToEntity(ResultSet rs) throws Exception {
         return new Categoria(
-            rs.getLong("idCategoria"),
-            rs.getString("nomeCategoria")
+            rs.getLong("id_categoria"),
+            rs.getString("nome")
         );
     }
 }
